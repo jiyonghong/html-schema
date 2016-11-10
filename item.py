@@ -80,14 +80,12 @@ class IntItem(Item):
 
 class DictItem(Item):
     # don't need css for DictItem (just a placeholder)
-    def __init__(self, css, type_=dict, use_parent=False, translate=False, child=None):
+    def __init__(self, child, css=None, type_=dict, use_parent=False, translate=False):
         super().__init__(css, type_, use_parent, translate)
 
-        from schemas.schema import Schema
+        from . import Schema
 
-        if child is None:
-            raise AttributeError('Child parameter must be set.')
-        elif child and not issubclass(child, Schema):
+        if child and not issubclass(child, Schema):
             raise AttributeError('Child parameter must be inheritance of Schema.')
         self.child = child
 
@@ -143,25 +141,28 @@ class ListItem(Item):
             return data
 
         for elem in elems:
-            child_data = {}
+            if self.child or self.attrs:
+                child_data = {}
+                
+                if self.child:
+                    for child_key, child_item in self.child.get_items():
+                        value = child_item.extract(elem)
+                        if isinstance(child_item, DictItem):
+                            child_data[child_key].update(value)
+                        else:
+                            child_data[child_key] = value
+                elif self.attrs:
+                    for attr, type_ in self.attrs.items():
+                        if elem.get(attr):
+                            child_data[attr] = self.sanitize(elem.get(attr), type_)
 
-            if self.child:
-                for child_key, child_item in self.child.get_items():
-                    value = child_item.extract(elem)
-                    if isinstance(child_item, DictItem):
-                        child_data[child_key].update(value)
-                    else:
-                        child_data[child_key] = value
+                    if child_data:
+                        child_data['text'] = elem.get_text()
+
+                if child_data and self.is_values_full(child_data.values()):
+                    data.append(child_data)
             else:
-                for attr, type_ in self.attrs.items():
-                    if elem.get(attr):
-                        child_data[attr] = self.sanitize(elem.get(attr), type_)
-
-                if child_data:
-                    child_data['text'] = elem.get_text()
-
-            if child_data and self.is_values_full(child_data.values()):
-                data.append(child_data)
+                data.append(self.sanitize(elem.get_text()))
 
         return data
 

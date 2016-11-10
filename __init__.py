@@ -1,3 +1,3 @@
 # -*- coding: utf-8 -*-
-from schemas.item import *
-from schemas.schema import *
+from .item import *
+from .schema import *

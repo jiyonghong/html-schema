@@ -1,14 +1,16 @@
 # -*- coding: utf-8 -*-
 from bs4 import BeautifulSoup, Comment
-from schemas.item import Item
 
 
 class Schema(object):
     container = None
 
-    def __init__(self, soup):
-        if isinstance(soup, (str, bytes)):
+    def __init__(self, soup, remove_comments=True):
+        self.soup = soup
+        if isinstance(self.soup, (str, bytes)):
             self.soup = BeautifulSoup(soup, 'html5lib')
+
+        if remove_comments:
             comments = self.soup.find_all(text=lambda text: isinstance(text, Comment))
             for comment in comments:
                 comment.extract()
@@ -18,6 +20,8 @@ class Schema(object):
 
     @classmethod
     def get_items(cls):
+        from .item import Item
+
         return {key: item
                 for key, item in cls.__dict__.items()
                 if isinstance(item, Item)}.items()
