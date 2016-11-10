@@ -1,7 +1,7 @@
 HTML Schema
 -----------
 
-`html-schema` allows HTML documents to be handled like SQLAlchemy-like Model and Column. It produces dictionary (json) for of HTML document. __Soon to be uploaded in pip.__
+`html_schema` allows HTML documents to be handled like SQLAlchemy-like Model and Column. It produces dictionary (json) for of HTML document. __Soon to be uploaded in pip.__
 
 Requisites
 * BeautifulSoup4
