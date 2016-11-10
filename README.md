@@ -41,7 +41,7 @@ class MySchema(Schema):
 my_schema = MySchema(soup)
 my_schema.extract_all() # {'title': 'Hello'}
 ```
-* **\__init__** (self, soup, remove_comments=True):
+* **\_\_init__** (self, soup, remove_comments=True):
     + __soup__: `BeautifulSoup`, `str`, `bytes`, initiates `BeautifulSoup` if `soup` is not `BeautifulSoup` instance
     + __remove_comments__: `bool`, removes comments from `soup`
 * __extract__ (self, key): returns `Item`'s data matching the name `key`
@@ -53,7 +53,7 @@ Item
 ====
 `Item` is a extracted data from a css selector. There are different data types for `Items` to validate and sanitize the content beforehand. You can have custom sanitizer which overrides the default sanitize method.
 
-* **\__init__** (self, css, type_, use_parent=False, translate=False, sanitizer=None)
+* **\_\_init__** (self, css, type_, use_parent=False, translate=False, sanitizer=None)
     + __css__: `str`, css selector for a item to extract its data from
     + __use_parent__: `bool`, used within the schema, extract data from a received soup not in a container
     + __translate__: `bool`, used within the schema, the item will be selected in `Schema.translate_keys`
@@ -69,7 +69,7 @@ Different types of `Item` have different parameters.
 
 ### StrItem
 String `Item`.
-* **\__init__** (self, css, use_parent=False, translate=False, sanitizer=None, attr=None, recursive=False)
+* **\_\_init__** (self, css, use_parent=False, translate=False, sanitizer=None, attr=None, recursive=False)
     + __attr__: `str`, extract data from attr
     + __recursive__: `bool`, generally Items extract from its `self.css` only, but `recursive=True` will include child elements to be extracted as well
 
@@ -83,12 +83,12 @@ h1_recursive.extract(soup) # Hello World
 
 ### IntItem
 Integer `Item`.
-* **\__init__** (self, css, use_parent=False, translate=False, sanitizer=None, attr=None)
+* **\_\_init__** (self, css, use_parent=False, translate=False, sanitizer=None, attr=None)
     + __attr__: `str`, extract data from attr
 
 ### DictItem
 Dictonary `Item`.
-* **\__init__** (self, child, css=None, type_=dict, use_parent=False, translate=False)
+* **\_\_init__** (self, child, css=None, type_=dict, use_parent=False, translate=False)
     + __css__: css is not required for dictionary since its just an placeholder *(if you want \__repr__ method to print css, you may use this param)*
     + __child__: `Schema`, child must be subclass of `Schema`, it will return `Schema`'s extracted dictionary
 
@@ -103,7 +103,7 @@ dict_.extract(soup) # {'gender': 'Male', 'name': 'Ji'}
 
 ### ListItem
 `Item` for list of elements.
-* **\__init__** (self, css, type_=list, use_parent=False, translate=False, sanitizer=None, child=None, attrs=None)
+* **\_\_init__** (self, css, type_=list, use_parent=False, translate=False, sanitizer=None, child=None, attrs=None)
     + you can only use one of child or attrs (if both are set child is used)
     + __child__: `Schema`, list of dictionaries of child
     + __attrs__: `dict`, list of dictionaries of attrs, `text` key is used for actual content of a element
@@ -121,7 +121,7 @@ list_attrs.extract(soup)
 
 ### HtmlItem
 `Item` for manipulating HTML before extraction
-* **\__init__** (self, css, use_parent=False, translate=False, sanitizer=None, remove_elems=None)
+* **\_\_init__** (self, css, use_parent=False, translate=False, sanitizer=None, remove_elems=None)
     + __remove_elems__: `str`, removes certain elements beforehand
 * __to_string__: returns string representation of HTML
 * __elem__: returns extracted HTML soup
