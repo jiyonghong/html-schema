@@ -44,7 +44,7 @@ class MySchema(Schema):
 my_schema = MySchema(soup)
 my_schema.extract_all() # {'title': 'Hello'}
 ```
-* **\_\_init__** (self, soup, remove_comments=True):
+* **\_\_init__** (self, soup, remove_comments=True)
     + __soup__: `BeautifulSoup`, `str`, `bytes`, initiates `BeautifulSoup` if `soup` is not `BeautifulSoup` instance
     + __remove_comments__: `bool`, removes comments from `soup`
 * __extract__ (self, key): returns `Item`'s data matching the name `key`
