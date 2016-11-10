@@ -1,5 +1,5 @@
 HTML Schema
------------
+===========
 
 `html_schema` allows HTML documents to be handled like SQLAlchemy-like Model and Column. It produces dictionary (json) for of HTML document. __Soon to be uploaded in pip.__
 
@@ -27,8 +27,11 @@ html = """
 soup = BeautifulSoup(html, 'html5lib')
 ```
 
+
 Schema
-======
+------
+
+
 `Schema` extracts portions of HTML document and produce dictionary from extracted data. `Schema` must have a `container` which tells to `Schema` where to extract its data from. Simplest `Schema` will looks like this.
 
 ```python
@@ -49,8 +52,11 @@ my_schema.extract_all() # {'title': 'Hello'}
 * __get_items__ (self): returns `Item`s in `Schema`
 * __get_translate_keys__: returns list of `Item`'s keys with `translate=True` (compatible to used with dpath library)
 
+
 Item
-====
+----
+
+
 `Item` is a extracted data from a css selector. There are different data types for `Items` to validate and sanitize the content beforehand. You can have custom sanitizer which overrides the default sanitize method.
 
 * **\_\_init__** (self, css, type_, use_parent=False, translate=False, sanitizer=None)
