@@ -189,9 +189,6 @@ class HtmlItem(Item):
             for remove_elem in self.elem.select(self.remove_elems):
                 remove_elem.extract()
 
-        for br in self.elem.select('br + br'):
-            br.extract()
-
         return self.elem
 
     def to_string(self):
